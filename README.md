@@ -1,7 +1,7 @@
 # cos225_finalProject
 File explorer thing
 
-ABSTRACT: The primary purpose of this program, ironically referred to as dedit, will be to use as a command-line file explorer with extra functionality to edit and organized the superstructure of files
+ABSTRACT: The primary purpose of this program, ironically referred to as dedit, will be to use as a command-line file explorer with extra functionality to edit and organize the superstructure of files
 
 RANDOM IDEAS:
 
