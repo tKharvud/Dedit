@@ -12,4 +12,7 @@ RANDOM IDEAS:
     - Sort according to file type: 1st layer is file type (text, image, sound, video, executables, misc, ,etc.)    
                                    2nd layer is the specific format ( .txt, .png, .mp3, .mp4, .class, .exe, , etc.)
                                    3rd layer are the files themselves. 
-                                   4th layer (optional) is user-specified according to file name, a seperate directory will be created for each stri
+                                   4th layer (optional) is user-specified according to file name, a seperate directory 
+                                    will be created for each string provided by the user.
+                                 
+- Have Folder and textfile objects that extend File object, ie. are child classes of the File object and inherit functionality from it. 
