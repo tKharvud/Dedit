@@ -1,0 +1,7 @@
+.xls
+.xlsm
+.xlsx
+.sxc
+.ods
+.sdc
+.numbers
