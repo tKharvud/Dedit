@@ -89,6 +89,9 @@ class FileTree {
 
 // METHODS BY TYLER HARWOOD
 
+
+
+
 	// Prints the File tree recursively
 	public void print() { print_p(head); }
 	private void print_p(Folder p)
@@ -96,45 +99,25 @@ class FileTree {
 
 		if(p.folders.toArray().length == 0)
 		{
-			for(int i = 0; i < p.files.toArray().length; i++)
-			{
-				for(int j = 0; j < p.depth(); j++)
-					System.out.print("\t");
-
-				System.out.format(
-				"%s\n", p.files.get(i).getName()
-				);
-
-			
-			}
-			
+			p.printFiles();
 			return;
 		}
 
 		else if(p.folders.toArray().length > 0)
 		{
+			p.printFiles();
 
-			for(int i = 0; i < p.files.toArray().length; i++)
-			{
-				for(int j = 0; j < p.depth(); j++)
-					System.out.print("\t");
-
-				System.out.format(
-				"%s\n", p.files.get(i).getName()
-				);
-
-			
-			}
-
+			// Recursive print and traversal into folders
 			for(int i = 0; i < p.folders.toArray().length; i++)
 			{
 				for(int j = 0; j < p.depth(); j++)
 					System.out.print("\t");
 
 				System.out.format(
-				"%s\n", p.folders.get(i).name()
+				"%s\n", p.folders.get(i).path()
 				);
 
+				//Recursive call
 				print_p(p.folders.get(i));
 			}
 		}

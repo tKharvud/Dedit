@@ -18,7 +18,7 @@ public class Folder {
 
     // Attributes
     public File self;
-    private String name;
+    private String name, path;
     private int depth;
 
     // Constructor
@@ -26,6 +26,7 @@ public class Folder {
 
 	self = f;
 	name = f.getName();
+	path = f.getAbsolutePath();
 	depth = 0;
 
 	parent = null;
@@ -36,7 +37,7 @@ public class Folder {
     }
 
 
-	// Setters
+// Setters
 	void addFolder (Folder o) { folders.add(o); }
 
 	void addFile (File o) { files.add(o); }
@@ -44,23 +45,35 @@ public class Folder {
 	void set_depth(int n) { depth = n; }
 
 	
-	// Getters
+// Getters
 	String name() { return name; }
+	String path() { return path; }
 	int depth() { return depth; }
 
+	// Non-recursive print of folders
 	void printFolders()
 	{
 		for(int i = 0; i < folders.toArray().length; i++)
 		{
-			System.out.println(folders.get(i));
-		}
+			for(int j = 0; j < depth; j++)
+				System.out.print("\t");
+
+			System.out.format("%s\n", folders.get(i).name());
+
+			
+		}		
 	}
 
 	void printFiles()
 	{
 		for(int i = 0; i < files.toArray().length; i++)
 		{
-			System.out.println(files.get(i));
+			for(int j = 0; j < depth; j++)
+				System.out.print("\t");
+
+			System.out.format("%s\n", files.get(i).getName());
+
+			
 		}
 	}
 
