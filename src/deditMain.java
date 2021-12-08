@@ -16,15 +16,29 @@ public class deditMain {
 
 
 
-
 	public static void main (String[] args) {
+
 
 		File head = new File("..");
 		File[] hlist = head.listFiles();
 		
 		FileTree etzChaim = new FileTree(head);
 
-		etzChaim.print();
+
+		// If args.length is 0, enter user-interface
+		if(args.length == 0){
+			
+
+
+			System.out.println("UI goes here");
+		}
+		else if(args.length == 1){
+	
+			if(args[0].equals("print")){
+			
+				etzChaim.print();
+			}
+		}
 
 	}
 }
