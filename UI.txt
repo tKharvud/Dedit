@@ -1,0 +1,18 @@
+
+NOTE: This is what the end-product UI should look like, >>> is where the user types commands
+
+C:/users/admin/Desktop/head/directory/subdirectory/foo/bar
+	
+	FILE			TYPE		SIZE
+
+	file.txt		text		22 kb
+	example.png		image		1 mb
+	hello.docx		document	52 kb
+------------------------------------------------------------------------------
+	COMMANDS	DESC.
+	
+	cd		Navigate into given folder
+	add		Creates a new directory with a given name	
+	remove	
+------------------------------------------------------------------------------
+>>> 
