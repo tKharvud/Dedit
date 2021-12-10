@@ -77,8 +77,31 @@ public class Folder {
 		}
 	}
 
+	// Generic binary search
 
 
 
+	// Generic Linear search
+    Folder searchFor (String name) {
+
+        for (int i = 0; i < folders.size(); i++) {
+            if (folders.get (i).name().equals (name)) {
+                return folders.get(i);
+            }
+        }
+
+        System.out.println ("No match found.");
+        return null;
+
+    }
+
+ 
+
+
+
+
+   
+	// toString Override
+	//@Override
 
 }
