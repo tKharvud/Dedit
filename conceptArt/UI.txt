@@ -16,3 +16,8 @@ C:/users/admin/Desktop/head/directory/subdirectory/foo/bar
 	remove	
 ------------------------------------------------------------------------------
 >>> 
+
+
+File: \t%40d\t
+Type: %10d\t
+Size: %10d
