@@ -8,7 +8,6 @@
 // Imports
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.Format;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
