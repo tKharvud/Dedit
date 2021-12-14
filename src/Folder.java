@@ -2,7 +2,7 @@
 // Tyler Harwood & Seth Vaughn      //
 // COS225 FINAL PROJECT            //
 // Professor Schotter             //
-// 17 December 2021              //
+// 15 December 2021              //
 //////////////////////////////////
 
 // Imports
@@ -19,73 +19,73 @@ public class Folder {
     // Attributes
     public File self;
     private String name, path;
+	private long length;
     private int depth;
 
     // Constructor
     public Folder (File f) {
 
-        self = f;
-        name = f.getName();
-        path = f.getAbsolutePath();
-        depth = 0;
-        parent = null;
-        files = new ArrayList <File>();
-        folders = new ArrayList <Folder>();
+	self = f;
+	name = f.getName();
+	path = f.getAbsolutePath();
+	length = f.length();
+	depth = 0;
+
+	parent = null;
+	
+	files = new ArrayList <File>();
+	folders = new ArrayList <Folder>();
 
     }
 
 
-    // Setters
-	void addFolder (Folder o) {
-        folders.add (o);
-    }
+// Setters
+	void addFolder (Folder o) { folders.add(o); }
 
-	void addFile (File o) {
-        files.add (o);
-    }
+	void addFile (File o) { files.add(o); }
 
-	void set_depth (int n) {
-        depth = n;
-    }
+	void set_depth(int n) { depth = n; }
 
 	
-    // Getters
-	String name() {
-        return name;
-    }
-
-	String path() {
-        return path;
-    }
-
-    int depth() {
-        return depth;
-    }
+// Getters
+	String name() { return name; }
+	String path() { return path; }
+	long length() { return length; }
+	int depth() { return depth; }
 
 	// Non-recursive print of folders
-	void printFolders() {
+	void printFolders()
+	{
+		for(int i = 0; i < folders.toArray().length; i++)
+		{
+			for(int j = 0; j < depth; j++)
+				System.out.print("\t");
 
-		for (int i = 0; i < folders.toArray().length; i++) {
-			for (int j = 0; j < depth; j++) {
-				System.out.print ("\t");
-            }
-			System.out.format ("%s\n", folders.get (i).name());
-		}
+			System.out.format("%s\n", folders.get(i).name());
 
+			
+		}		
 	}
 
-	void printFiles() {
+	void printFiles()
+	{
+		for(int i = 0; i < files.toArray().length; i++)
+		{
+			for(int j = 0; j < depth; j++)
+				System.out.print("\t");
 
-		for (int i = 0; i < files.toArray().length; i++) {
-			for (int j = 0; j < depth; j++) {
-				System.out.print ("\t");
-            }
-			System.out.format ("%s\n", files.get (i).getName());
+			System.out.format("%s\n", files.get(i).getName());
+
+			
 		}
-
 	}
 
-    Folder searchForFolder (ArrayList <Folder> folders, String name) {
+	// Generic binary search
+
+
+
+	// Generic Linear search
+    Folder searchFor (String name) {
 
         for (int i = 0; i < folders.size(); i++) {
             if (folders.get (i).name().equals (name)) {
@@ -98,17 +98,13 @@ public class Folder {
 
     }
 
-    File searchForFile (ArrayList <File> files, String name) {
+ 
 
-        for (int i = 0; i < files.size(); i++) {
-            if (files.get (i).getName().equals (name)) {
-                return files.get(i);
-            }
-        }
 
-        System.out.println ("No match found.");
-        return null;
 
-    }
+
+   
+	// toString Override
+	//@Override
 
 }
