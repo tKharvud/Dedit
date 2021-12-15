@@ -6,8 +6,8 @@
 //////////////////////////////////
 
 //DESCRIPTION:
-// An unbalanced linked tree of Folders with an undefined width and depth. 
-// Covers Use of Linked nodes, File IO, and overloading.
+//	An unbalanced linked tree of Folders with an undefined width and depth. 
+// 	Covers Use of Linked nodes, File IO, and overloading.
 
 
 // Imports
@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.time.LocalDateTime;
 
 class FileTree {
@@ -153,27 +152,34 @@ class FileTree {
 	public void export(Folder p)
 	throws IOException 
 	{
-		System.out.format(
-			"\nExporting map of Library from %s\n\n",
-			p.path()
-		);
 
-		String outName = String.format(
-				"output_files/%s_%s.txt",
-				p.self.getName(),
-				LocalDateTime.now()
-			      );
-		FileWriter w = new FileWriter(outName);
-		
+		// try {
+			System.out.format(
+				"\nExporting map of Library from %s\n\n",
+				p.path()
+			);
 
-		w.write(print_p(p));
-		w.close();
+			String outName = String.format(
+					"output_files/%s_%s.txt",
+					p.self.getName(),
+					LocalDateTime.now()
+					);
+			FileWriter w = new FileWriter(outName);
+			
+
+			w.write(print(p));
+			w.close();
+		// }catch(IOException e){ 
+		// 	System.out.println(
+		// 	"ERROR: Failed to export"
+		// 	);
+		// }
 	}
 
 
-	// Prints the File tree recursively
-	public void print() { print_p(head); }
-	private String print_p(Folder p)
+	// Prints the File tree recursively- Example of overload.
+	public void print() { print(head); }
+	private String print(Folder p)
 	{
 		String output = "";
 
@@ -209,7 +215,7 @@ class FileTree {
 
 				//Recursive call
 				output = output.concat(
-					print_p(p.folders.get(i))
+					print(p.folders.get(i))
 				);
 			}
 

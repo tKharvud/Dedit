@@ -6,8 +6,8 @@
 //////////////////////////////////
 
 // DECRIPTION:
-//	
-//	
+//	Folder object, has two arraylists: one for Folders, one for files.
+//	IE. Node of the File Tree. 
 
 
 // Imports
@@ -48,6 +48,8 @@ public class Folder {
 	void addFile (File o) { files.add(o); }
 
 	void set_depth(int n) { depth = n; }
+
+    void set_name(String s) { name = s; }
 
 	
 // Getters
@@ -104,25 +106,6 @@ public class Folder {
 		return output;	
 	}
 
-	void printID()
-	{
-
-		for(int i = 0; i < files.toArray().length; i++)
-		{
-			for(int j = 0; j < depth; j++)
-			{
-				System.out.print("\t");
-			}	
-
-			System.out.format("%d\n", files.get(i).hashCode());
-		}
-		
-		return;	
-	}
-
-
-
-
 	// Generic Iterative Quick Sort
 	// WHERE I LEARNED QUICKSORT: 
 	// 	https://www.geeksforgeeks.org/iterative-quick-sort/
@@ -131,7 +114,6 @@ public class Folder {
 		int start = 0;
 		int end = files.size() - 1;
 
-		
 	}
 	
 
@@ -229,6 +211,19 @@ public class Folder {
         for (int i = 0; i < folders.size(); i++) {
             if (folders.get (i).name().equals (name)) {
                 return folders.get(i);
+            }
+        }
+
+        System.out.println ("No match found.");
+        return null;
+
+    }
+
+    File searchForFile (String name) {
+
+        for (int i = 0; i < files.size(); i++) {
+            if (files.get (i).getName().equals (name)) {
+                return files.get(i);
             }
         }
 

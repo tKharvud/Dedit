@@ -5,12 +5,14 @@
 // 15 December 2021              //
 //////////////////////////////////
 
+//DESCRIPTION:
+//	Main/Driver class. Initializes File Tree and displays User Interface
+
 // Imports
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class dedit {
 
@@ -131,6 +133,7 @@ public class dedit {
 		String typeString = "Type";
 		String sizeString = "Size";
 
+		//Folder Header
 		System.out.println(
 				"------------------------------------------------------------------------------------------------"
 		);
@@ -148,6 +151,7 @@ public class dedit {
 			String folderString = "Folder";
 			long folderSize = p.folders.get(i).self.length();
 
+			//Prints when size is greater than one GB.
 			if(folderSize >= 1073741824){
 
 				folderSize = folderSize / 1073741824;
@@ -161,6 +165,7 @@ public class dedit {
 
 			}
 
+			//Prints when size is greater than one MB.
 			else if(folderSize >= 1048576){
 
 				folderSize = folderSize / 1048576;
@@ -174,6 +179,7 @@ public class dedit {
 
 			}
 
+			//Prints when size is greater than one KB.
 			else if(folderSize >= 1024){
 
 				folderSize = folderSize / 1024;
@@ -187,6 +193,7 @@ public class dedit {
 
 			}
 
+			//Prints when size is less than one KB.
 			else{
 
 				System.out.format(
@@ -200,6 +207,7 @@ public class dedit {
 
 		}
 
+		//File Header
 		System.out.println(
 				"\n------------------------------------------------------------------------------------------------"
 		);
@@ -273,9 +281,8 @@ public class dedit {
 		String descHeader = "Commands Description";
 		String cdString = "cd";
 		String cdDesc = "Navigate into given folder.";
-		String addString = "add";
-		String addDesc = "Creates a new directory with a given name.";
-		String removeString = "remove";
+		String exportString = "export";
+		String exportDesc = "Prints a map of the FileTree to a .txt file.";
 		String quitString = "q";
 		String quitDesc = "Quits program.";
 
@@ -293,12 +300,8 @@ public class dedit {
 		);
 		System.out.format(
 			"\t%-40s\t%-10s\n",
-			addString,
-			addDesc
-		);
-		System.out.format(
-			"\t%-40s\n",
-			removeString
+			exportString,
+			exportDesc
 		);
 		System.out.format(
 			"\t%-40s\t%-10s\n",
@@ -316,7 +319,6 @@ public class dedit {
 
 
 		File head = new File("..");
-		File[] hlist = head.listFiles();
 		
 		FileTree etzChaim = new FileTree(head);
 		Folder currentDir = etzChaim.getHead();
@@ -361,40 +363,41 @@ public class dedit {
 
 				}
 
-				else if(input[0].equals("print")){
+				// else if(input[0].equals("print")){
 
-					if(currentDir.folders.size() > 0)
-						currentDir.printFolders();
+				// 	if(currentDir.folders.size() > 0)
+				// 		currentDir.printFolders();
 
-					if(currentDir.files.size() > 0)
-						currentDir.printID();
+				// 	if(currentDir.files.size() > 0)
+				// 		currentDir.printFiles();
 
-				}
+				// }
 				
 				// Exports from current directory
 				else if(input[0].equals("export")){
 
-					try{ etzChaim.export(currentDir); }
-					catch(IOException e){ 
-						System.out.println(
-						"ERROR: Failed to export"
-						);
-						System.exit(0);
+					while(true){
+						try{ etzChaim.export(currentDir); break; }
+						catch(IOException e){
+						System.out.print("Directory \"output_files\" not found, creating...");
+						File newDir = new File ("output_files");
+						newDir.mkdir();
+						}
 					}
 
 				}
 
-				else if(input[0].equals("sort")){
+				// else if(input[0].equals("sort")){
 
-					if(currentDir.folders.size() > 0)
-						//currentDir.sortFolders();
-						currentDir.printFolders();
+				// 	if(currentDir.folders.size() > 0)
+				// 		//currentDir.sortFolders();
+				// 		currentDir.printFolders();
 
-					if(currentDir.files.size() > 0)
-						//currentDir.sortFiles();
-						currentDir.printFiles();
+				// 	if(currentDir.files.size() > 0)
+				// 		//currentDir.sortFiles();
+				// 		currentDir.printFiles();
 
-				}
+				// }
 
 				else {
 					quitBool = false;
@@ -413,7 +416,24 @@ public class dedit {
 	
 			// If argument is "help", enter help.
 			if (args [0].equals ("help")) {
-				System.out.println ("This will enter help.");
+
+				try {
+
+					File readme = new File ("readme.txt");
+					Scanner helpScan = new Scanner (readme);
+
+					while (helpScan.hasNext()) {
+
+						System.out.println (helpScan.nextLine());
+
+					}
+
+					helpScan.close();
+
+				} catch (FileNotFoundException e) {
+					System.out.println("readme.txt not found.");
+				}
+
 			}
 
 			// If argument is "search", enter search.
@@ -422,7 +442,7 @@ public class dedit {
 			}
 		
 			else if (args [0].equals ("rip")) {
-				System.out.println ("rerip()");
+				System.out.println ("This will enter rip.");
 			}
 	
 			// If argument is "print", enter print.
@@ -435,8 +455,14 @@ public class dedit {
 
 			else if (args [0].equals ("export")) {
 
-				try{ etzChaim.export(etzChaim.getHead()); }
-				catch(IOException e){ System.exit(0); }
+				while(true){
+					try{ etzChaim.export(etzChaim.getHead()); break; }
+					catch(IOException e){
+					System.out.print("Directory \"output_files\" not found, creating...");
+					File newDir = new File ("output_files");
+					newDir.mkdir();
+					}
+				}
 			}
 
 			else {
