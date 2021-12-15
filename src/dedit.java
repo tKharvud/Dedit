@@ -315,7 +315,8 @@ public class dedit {
 
 
 // The State of Maine
-	public static void main (String[] args) {
+	public static void main (String[] args)
+	throws InterruptedException {
 
 
 		File head = new File("..");
@@ -400,6 +401,8 @@ public class dedit {
 				// }
 
 				else {
+					System.out.print ("Invalid command. Restarting...");
+					Thread.sleep(2000);
 					quitBool = false;
 				}
 
@@ -467,7 +470,10 @@ public class dedit {
 
 			else {
 				System.out.format (
-				"Argument %s not found", args[1]);
+				"Argument %s not found\n%s",
+					args[0],
+					"Run with: \"java dedit help\"\n"
+				);
 
 			}
 
