@@ -1,3 +1,4 @@
+
 DEDIT- A barebones file explorer.
 
 DESCRIPTION:
@@ -24,7 +25,7 @@ EXECUTION INSTRUCTIONS:
 			dedit.java
 			Folder.java
 	  		FileTree.java
-        	readme.txt
+			readme.txt
 
 	2.	From terminal: navigate into the "dedit" directory.
 

@@ -37,7 +37,7 @@ class FileTree {
     // Overloaded Constructor
     FileTree (File f) {
 
-        System.out.println ("FileTree Created");
+        // System.out.println ("FileTree Created");
 
         head = new Folder (f);
         head.parent = null;
