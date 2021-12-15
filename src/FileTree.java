@@ -2,14 +2,21 @@
 // Tyler Harwood & Seth Vaughn      //
 // COS225 FINAL PROJECT            //
 // Professor Schotter             //
-// 17 December 2021              //
+// 15 December 2021              //
 //////////////////////////////////
+
+//DESCRIPTION:
+// An unbalanced linked tree of Folders with an undefined width and depth. 
+// Covers Use of Linked nodes, File IO, and overloading.
+
 
 // Imports
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.LocalDateTime;
 
 class FileTree {
     
@@ -17,7 +24,7 @@ class FileTree {
     private Folder head = null;
 	
 	// Array list containing all leaf nodes
-	private ArrayList<File> leaves = new ArrayList<File>();
+	private ArrayList<Folder> leaves = new ArrayList<Folder>();
 
 	// Array list of user-saved shortcuts
 	private ArrayList<Folder> shortcuts;
@@ -26,7 +33,9 @@ class FileTree {
 
 
 
-    // Constructor
+	
+
+    // Overloaded Constructor
     FileTree (File f) {
 
         System.out.println ("FileTree Created");
@@ -41,7 +50,7 @@ class FileTree {
      
     }
 	
-	// Alternate constructor
+	/*/// Default constructor
 	FileTree(){
 
 		System.out.println("Branch FileTree Created");
@@ -61,6 +70,8 @@ class FileTree {
 		File
 
 	}
+	/*///
+
 
 // Internal function that recursively builds the File tree
     private void build (Folder currentFolder, File directory) {
@@ -69,8 +80,8 @@ class FileTree {
 
         if (directory.isFile() && (directory.getParentFile() != null))
 	{
-            currentFolder.files.add (directory);
-            return;
+            	currentFolder.files.add (directory);
+            	return;
         }
 
         else if (directory.isDirectory()) 
@@ -86,14 +97,9 @@ class FileTree {
             }
 
 	//// Adds leaf nodes to leaves arrayList
-	    if(childFolder.folders.toArray().length == 0
-		&& childFolder.files.toArray().length != 0)
+	    if(childFolder.folders.size() == 0)
 	    {
-	    	for(int i = 0; i < childFolder.files.toArray().length; i++)
-	    	{
-			System.out.println(childFolder.files.get(i).getName());
-			leaves.add(childFolder.files.get(i));
-	    	}
+	    	leaves.add(childFolder);
 	    }
 	////
         }
@@ -140,43 +146,88 @@ class FileTree {
 // METHODS BY TYLER HARWOOD
 
 
+
+
+
+	// Exports file Tree to file according to format defined in print()
+	public void export(Folder p)
+	throws IOException 
+	{
+		System.out.format(
+			"\nExporting map of Library from %s\n\n",
+			p.path()
+		);
+
+		String outName = String.format(
+				"output_files/%s_%s.txt",
+				p.self.getName(),
+				LocalDateTime.now()
+			      );
+		FileWriter w = new FileWriter(outName);
+		
+
+		w.write(print_p(p));
+		w.close();
+	}
+
+
 	// Prints the File tree recursively
 	public void print() { print_p(head); }
-	private void print_p(Folder p)
+	private String print_p(Folder p)
 	{
+		String output = "";
 
-		if(p.folders.toArray().length == 0)
+		if(p.folders.size() == 0)
 		{
-			p.printFiles();
-			return;
+			output = output.concat(p.printFiles());
+			
 		}
 
-		else if(p.folders.toArray().length > 0)
+		else if(p.folders.size() > 0)
 		{
-			p.printFiles();
+			output = output.concat(p.printFiles());
 
 			// Recursive print and traversal into folders
-			for(int i = 0; i < p.folders.toArray().length; i++)
+			for(int i = 0; i < p.folders.size(); i++)
 			{
+
 				for(int j = 0; j < p.depth(); j++)
+				{
 					System.out.print("\t");
+					output = output.concat("\t");
+				}	
 
 				System.out.format(
 					"%s\n", p.folders.get(i).path()
 				);
+				output = output.concat( 
+					String.format(
+						"%s\n", 
+						p.folders.get(i).path()
+					)
+				);
 
 				//Recursive call
-				print_p(p.folders.get(i));
+				output = output.concat(
+					print_p(p.folders.get(i))
+				);
 			}
+
 		}
 		
-		else{ System.out.println("Something bad happened :^/"); }
+		else
+		{
+			System.out.println("Something bad happened :^/"); 
+			return "~~~~~~~OUTPUT ERROR~~~~~~";
+		}
+
+		return output;
 	}
 
 // Setters
 
-	// Adds a given File to the leaf node array list. 
-	void addLeaf(File f) { leaves.add(f); }
+	// Adds a given Folder to the leaf node array list. Not used.
+	void addLeaf(Folder f) { leaves.add(f); }
 
 
 // Getters
@@ -185,12 +236,11 @@ class FileTree {
 	
 	void printLeaves()
 	{
-		for(int i = 0; i < leaves.toArray().length; i++)
+		for(int i = 0; i < leaves.size(); i++)
 		{
-			System.out.format("\t%s\n", leaves.get(i).getPath());
+			System.out.format("\t%s\n", leaves.get(i).path());
 		}
 	}
 
-	File search()
 
 }
