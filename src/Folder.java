@@ -5,6 +5,11 @@
 // 15 December 2021              //
 //////////////////////////////////
 
+// DECRIPTION:
+//	Folder object, has two arraylists: one for Folders, one for files.
+//	IE. Node of the File Tree. 
+
+
 // Imports
 import java.util.ArrayList;
 import java.io.File;
@@ -19,7 +24,6 @@ public class Folder {
     // Attributes
     public File self;
     private String name, path;
-	private long length;
     private int depth;
 
     // Constructor
@@ -28,7 +32,6 @@ public class Folder {
 	self = f;
 	name = f.getName();
 	path = f.getAbsolutePath();
-	length = f.length();
 	depth = 0;
 
 	parent = null;
@@ -46,50 +49,181 @@ public class Folder {
 
 	void set_depth(int n) { depth = n; }
 
+    void set_name(String s) { name = s; }
+
 	
 // Getters
 	String name() { return name; }
 	String path() { return path; }
-	long length() { return length; }
 	int depth() { return depth; }
 
-	// Non-recursive print of folders
-	void printFolders()
+
+	// Iterative print of folders
+	String printFolders()
 	{
+		String output = "";
+
 		for(int i = 0; i < folders.toArray().length; i++)
 		{
 			for(int j = 0; j < depth; j++)
+			{
 				System.out.print("\t");
+				output = output.concat("\t");
+			}	
 
 			System.out.format("%s\n", folders.get(i).name());
-
+			output = output.concat(
+				String.format("%s\n", folders.get(i).name())
+			);			
+		}	
+		
 			
-		}		
+	
+		return output;
 	}
 
-	void printFiles()
+	// Iterative print of files
+	String printFiles()
 	{
+		String output = "";
+
 		for(int i = 0; i < files.toArray().length; i++)
 		{
 			for(int j = 0; j < depth; j++)
+			{
 				System.out.print("\t");
+				output = output.concat("\t");
+			}	
+
 
 			System.out.format("%s\n", files.get(i).getName());
 
-			
+			output = output.concat(
+				String.format("%s\n", files.get(i).getName())
+			);
 		}
+		
+		return output;	
 	}
 
-	// Generic binary search
+	// Generic Iterative Quick Sort
+	// WHERE I LEARNED QUICKSORT: 
+	// 	https://www.geeksforgeeks.org/iterative-quick-sort/
+	public void sort()
+	{
+		int start = 0;
+		int end = files.size() - 1;
+
+	}
+	
+
+
+	// Iterative binary search for FILE 
+	// NOT MINE: https://www.techiedelight.com/binary-search/
+    public File findFile(String target)
+    {
+        // search space is nums[left…right]
+        int left = 0, right = files.size() - 1;
+ 
+        // loop till the search space is exhausted
+        while (left <= right)
+        {
+            // find the mid-value in the search space and
+            // compares it with the target
+ 
+            int mid = (left + right) / 2;
+ 
+            // overflow can happen. Use:
+            // int mid = left + (right - left) / 2;
+            // int mid = right - (right - left) / 2;
+ 
+            // target is found
+            if (target.equals( files.get(mid) )) {
+                return files.get(mid);
+            }
+ 
+            // discard all elements in the right search space,
+            // including the middle element
+            else if (target.charAt(0) < files.get(mid).getName().charAt(0)) {
+                right = mid - 1;
+            }
+ 
+            // discard all elements in the left search space,
+            // including the middle element
+            else {
+                left = mid + 1;
+            }
+        }
+ 
+        // `target` doesn't exist in the array
+        return null;
+    }
+
+
+	// Iterative binary search for FOLDER
+	// NOT MINE, BASED ON: https://www.techiedelight.com/binary-search/
+
+    public Folder findFolder(String target)
+    {
+        // search space is nums[left…right]
+        int left = 0, right = folders.size() - 1;
+ 
+        // loop till the search space is exhausted
+        while (left <= right)
+        {
+            // find the mid-value in the search space and
+            // compares it with the target
+ 
+            int mid = (left + right) / 2;
+ 
+            // overflow can happen. Use:
+            // int mid = left + (right - left) / 2;
+            // int mid = right - (right - left) / 2;
+ 
+            // target is found
+            if (target.equals( folders.get(mid) )) {
+                return folders.get(mid);
+            }
+ 
+            // discard all elements in the right search space,
+            // including the middle element
+            else if (target.charAt(0) < folders.get(mid).name().charAt(0)) {
+                right = mid - 1;
+            }
+ 
+            // discard all elements in the left search space,
+            // including the middle element
+            else {
+                left = mid + 1;
+            }
+        }
+ 
+        // `target` doesn't exist in the array
+        return null;
+    }
 
 
 
-	// Generic Linear search
+
+	// Linear search for FOLDER
     Folder searchFor (String name) {
 
         for (int i = 0; i < folders.size(); i++) {
             if (folders.get (i).name().equals (name)) {
                 return folders.get(i);
+            }
+        }
+
+        System.out.println ("No match found.");
+        return null;
+
+    }
+
+    File searchForFile (String name) {
+
+        for (int i = 0; i < files.size(); i++) {
+            if (files.get (i).getName().equals (name)) {
+                return files.get(i);
             }
         }
 

@@ -5,26 +5,125 @@
 // 15 December 2021              //
 //////////////////////////////////
 
+//DESCRIPTION:
+//	Main/Driver class. Initializes File Tree and displays User Interface
+
 // Imports
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 
 public class dedit {
 
-// Global data
 
+//// Functions
 
-
-// Functions
-
+	// Create branch to write sorted library to
 	public void rerip(FileTree etzChaim)
 	{
-		FileTree yggdrasil = new FileTree();
+		//FileTree yggdrasil = new FileTree();
+		int x;
 	}
 
+
+
+
+	// Determines file type based on extension
+	public static String getType(File f)
+	{
+
+		// File types
+
+		String[] docslist = {".pdf", ".ott", ".rtf", ".doc", ".docm", ".docx", ".abw", ".aww", ".chm", ".cnt", ".dbx", ".djvu", ".dot", ".dotm", ".dotx", ".epub", ".gp4", ".ind", ".indd", ".key", ".keynote", ".mht", ".mpp", ".odf", ".ods", ".odt", ".opx", ".oxps", ".pages", ".pmd", ".pot", ".potx", ".pps", ".ppsx", ".ppt", ".pptm", ".pptx", ".prn", ".prproj", ".ps", ".pub", ".pwi", ".sdd", ".sdw", ".shs", ".snp", ".sxw", ".tpl", ".vsd", ".wpd", ".wps", ".wri", ".xps" };
+
+		String[] imagelist = {".jpg", ".png", ".gif", ".jpeg", ".bmp", ".cpt", ".dds", ".dib", ".dng", ".emf", ".heic", ".ico", ".icon", ".pcx", ".pic", ".psd", ".psdx", ".raw", ".tga", ".thm", ".tif", ".tiff", ".wbmp", ".wdp", ".webp", ".arw", ".cr2", ".crw", ".dcr", ".dng", ".fpx", ".mrw", ".nef", ".orf", ".pcd", ".ptx", ".raf", ".raw", ".rw2" };
+
+		String[] exelist = {".class", ".jar", ".exe", ".air", ".app", ".application", ".appx", ".bat", ".bin", ".com", ".cpl", ".deb", ".dll", ".elf", ".js", ".lnk", ".msi", ".part1.exe", ".prg", ".rpm", ".shs", ".vbs", ".xap" };
+
+		String[] sheetslist= {".xls", ".xlsm", ".xlsx", ".sxc", ".ods", ".sdc", ".numbers" };
+
+		String[] soundlist = {".mp3", ".ogg", ".wav", ".midi", ".m4a", ".m4b", ".m4p", ".wma", ".opus", ".wpl", ".3ga", ".aac", ".aiff", ".amr", ".ape", ".arf", ".asf", ".asx", ".cda", ".dvf", ".flac", ".gp4", ".gp5", ".gpx", ".logic", ".pcm", ".rec", ".snd", ".sng", ".uax", ".zab" };
+
+		String[] srclist = {".java", ".c", ".py", ".asm", ".asp", ".aspx", ".bat", ".htm", ".inc", ".jad", ".js", ".json", ".jsp", ".lib", ".o", ".php", ".rc", ".rss", ".scpt", ".src", ".vbs", ".xcodeproj", ".xml", ".xsd", ".xsl", ".xslt" };
+
+
+		String[] textlist = {".txt", ".text", ".rtf", ".csv", ".html", ".xml", ".xsd", ".xsl", ".xslt", ".1st", ".alx", ".application", ".asp", ".htm", ".log", ".lrc", ".lst", ".md", ".nfo", ".opml", ".plist", ".reg", ".srt", ".sub", ".tbl", ".xmp" };
+
+
+		String[] threeDlist = {".3d", ".3ds", ".c4d", ".dgn", ".dwfx", ".dwg", ".dxf", ".ipt", ".lcf", ".max", ".obj", ".pro", ".skp", ".stl", ".u3d", ".x_t" };
+
+
+		String[] videolist = {	
+			".mp4", ".mov", ".webm", ".mkv", ".avi", ".mpeg",
+			".m4v", ".wmv", ".264", ".3g2", ".3gp", ".arf", ".asf", 
+			".asx", ".bik", ".dash", ".dat", ".dvr", ".flv", 
+			".h264", ".m2t", ".m2ts", ".mod", ".mpg", ".mts", 
+			".ogv", ".prproj", ".rec", ".rmvb", ".swf", ".tod", 
+			".tp", ".ts", ".vob", ".wlmp"
+		};
+
+		String[][] typelist = { textlist, imagelist, docslist, exelist, sheetslist, soundlist, srclist, threeDlist, videolist };
+
+
+
+		// Extract extension
+		String extension = ".";
+		String[] parts = f.getName().split("\\.");
+		if(parts.length > 0)
+		{
+			extension = extension.concat( parts[parts.length-1] );
+
+			
+			// Linear search to Determine file type
+			for(int i = 0; i < typelist.length; i++)
+			{
+				for(int j = 0; j < typelist[i].length; j++)
+				{
+					if(extension.equals(typelist[i][j]))
+					{
+
+						switch(i)
+						{
+						case 0:
+							return "text";
+						case 1:
+							return "image";
+							
+						case 2:
+							return "document"; 
+							
+						case 3:
+							return "executable"; 
+							
+						case 4: 
+							return "spreadsheet";
+							
+						case 5:
+							return "sound";
+							
+						case 6:
+							return "sourcecode";
+							
+						case 7:
+							return "3d";
+							
+						case 8:
+							return "video";
+							
+
+						}
+			
+					}
+				}
+			}
+		}		
+		// else
+		return "File";
+	}
+
+
+
+	// Prints the UI based on current folder
 	public static void printUI(Folder p)
 	{
 
@@ -33,6 +132,7 @@ public class dedit {
 		String typeString = "Type";
 		String sizeString = "Size";
 
+		//Folder Header
 		System.out.println(
 				"------------------------------------------------------------------------------------------------"
 		);
@@ -44,12 +144,13 @@ public class dedit {
 		);
 
 		// Folders
-		for(int i = 0; i < p.folders.toArray().length; i++)
+		for(int i = 0; i < p.folders.size(); i++)
 		{
 
 			String folderString = "Folder";
-			long folderSize = p.folders.get(i).length();
+			long folderSize = p.folders.get(i).self.length();
 
+			//Prints when size is greater than one GB.
 			if(folderSize >= 1073741824){
 
 				folderSize = folderSize / 1073741824;
@@ -63,6 +164,7 @@ public class dedit {
 
 			}
 
+			//Prints when size is greater than one MB.
 			else if(folderSize >= 1048576){
 
 				folderSize = folderSize / 1048576;
@@ -76,6 +178,7 @@ public class dedit {
 
 			}
 
+			//Prints when size is greater than one KB.
 			else if(folderSize >= 1024){
 
 				folderSize = folderSize / 1024;
@@ -89,6 +192,7 @@ public class dedit {
 
 			}
 
+			//Prints when size is less than one KB.
 			else{
 
 				System.out.format(
@@ -102,6 +206,7 @@ public class dedit {
 
 		}
 
+		//File Header
 		System.out.println(
 				"\n------------------------------------------------------------------------------------------------"
 		);
@@ -113,10 +218,10 @@ public class dedit {
 		);
 
 		// Files
-		for(int j = 0; j < p.files.toArray().length; j++)
+		for(int j = 0; j < p.files.size(); j++)
 		{
 
-			String fileString = "File";
+			String fileString = getType(p.files.get(j));
 			long fileSize = p.files.get(j).length();
 
 			if(fileSize >= 1073741824){
@@ -175,9 +280,8 @@ public class dedit {
 		String descHeader = "Commands Description";
 		String cdString = "cd";
 		String cdDesc = "Navigate into given folder.";
-		String addString = "add";
-		String addDesc = "Creates a new directory with a given name.";
-		String removeString = "remove";
+		String exportString = "export";
+		String exportDesc = "Exports directory-map from current directory.";
 		String quitString = "q";
 		String quitDesc = "Quits program.";
 
@@ -195,12 +299,8 @@ public class dedit {
 		);
 		System.out.format(
 			"\t%-40s\t%-10s\n",
-			addString,
-			addDesc
-		);
-		System.out.format(
-			"\t%-40s\n",
-			removeString
+			exportString,
+			exportDesc
 		);
 		System.out.format(
 			"\t%-40s\t%-10s\n",
@@ -211,12 +311,13 @@ public class dedit {
 	}
 
 
+
+
 // The State of Maine
 	public static void main (String[] args) {
 
 
 		File head = new File("..");
-		File[] hlist = head.listFiles();
 		
 		FileTree etzChaim = new FileTree(head);
 		Folder currentDir = etzChaim.getHead();
@@ -232,14 +333,16 @@ public class dedit {
 
 			while (quitBool == false) {
 
+				// Header for UI
 				System.out.println(currentDir.path());
 
-				// UI print
+				// UI print of files
 				printUI (currentDir);
-
 				System.out.println(
-						"\n------------------------------------------------------------------------------------------------\n"
+					"\n------------------------------------------------------------------------------------------------\n"
 				);
+
+				// USER INPUT
 				System.out.println("Enter a command");
 				System.out.print(">>> ");
 
@@ -251,8 +354,6 @@ public class dedit {
 
 				else if(input[0].equals("cd")){
 
-					// Maintaining 80-char limit
-					// Do not change my syntax
 					Folder r = etzChaim.cdForward(
 						currentDir, input[1]
 					);
@@ -263,8 +364,37 @@ public class dedit {
 
 				else if(input[0].equals("print")){
 
-					currentDir.printFolders();
-					currentDir.printFiles();
+					if(currentDir.folders.size() > 0)
+						currentDir.printFolders();
+
+					if(currentDir.files.size() > 0)
+						currentDir.printFiles();
+
+				}
+				
+				// Exports from current directory
+				else if(input[0].equals("export")){
+
+					while(true){
+						try{ etzChaim.export(currentDir); break; }
+						catch(IOException e){
+						System.out.print("Directory \"output_files\" not found, creating...");
+						File newDir = new File ("output_files");
+						newDir.mkdir();
+						}
+					}
+
+				}
+
+				else if(input[0].equals("sort")){
+
+					if(currentDir.folders.size() > 0)
+						//currentDir.sortFolders();
+						currentDir.printFolders();
+
+					if(currentDir.files.size() > 0)
+						//currentDir.sortFiles();
+						currentDir.printFiles();
 
 				}
 
@@ -292,23 +422,42 @@ public class dedit {
 			else if (args [0].equals ("search")) {
 				System.out.println ("This will enter search.");
 			}
+		
+			else if (args [0].equals ("rip")) {
+				System.out.println ("rerip()");
+			}
 	
 			// If argument is "print", enter print.
 			else if (args [0].equals ("print")) {
+
 				etzChaim.print();
-			
 				// For debugging
 				//etzChaim.printLeaves();
+			}
+
+			else if (args [0].equals ("export")) {
+
+				while(true){
+					try{ etzChaim.export(etzChaim.getHead()); break; }
+					catch(IOException e){
+					System.out.print("Directory \"output_files\" not found, creating...");
+					File newDir = new File ("output_files");
+					newDir.mkdir();
+					}
+				}
 			}
 
 			else {
 				System.out.format (
 				"Argument %s not found", args[1]);
 
-				System.exit(0);
 			}
 
 		}
+
+	// On-exit export?
+	//try{ etzChaim.export(); }
+	//catch(IOException e){ System.exit(0); }
 
 	}// end main
 }
