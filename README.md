@@ -1,12 +1,9 @@
-# cos225_finalProject
-File explorer thing
+# Dedit - A command-line file-explorer
 
 DESCRIPTION:
 
 	The intention of this program is to provide intuitive tools for 
 	file management and parsing through a command-line user-interface. 
-	While the basics of a file-manager are present, an effort has been
-	made to develop tools to solve more complex and tedious problems.
 
 
 EXECUTION INSTRUCTIONS:
